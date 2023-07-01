@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: notification-service
+  cloud:
+    config:
+      uri: http://config-service:8001
+      fail-fast: true
+      password: admin
+      username: user

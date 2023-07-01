@@ -1,19 +1,43 @@
 plugins {
     id 'java'
+    id 'org.springframework.boot' version '2.3.2.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+    id "io.freefair.lombok" version "6.3.0"
 }
 
-group = 'org.example'
-version = '1.0-SNAPSHOT'
+version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
 }
 
-dependencies {
-    testImplementation platform('org.junit:junit-bom:5.9.1')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'com.javastart.account.AccountApplication'
+        )
+    }
 }
 
-test {
-    useJUnitPlatform()
+ext {
+    set('springCloudVersion', "Hoxton.SR1")
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+dependencies {
+    implementation "org.springframework.boot:spring-boot-starter-web:2.3.2.RELEASE"
+    implementation "org.springframework.boot:spring-boot-starter-actuator:2.3.2.RELEASE"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+    implementation "org.springframework.cloud:spring-cloud-starter-config"
+    implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
+    implementation "org.springframework.cloud:spring-cloud-starter-netflix-eureka-client"
+    implementation "org.springframework.cloud:spring-cloud-starter-sleuth"
+    implementation "org.springframework.cloud:spring-cloud-starter-netflix-hystrix"
+    implementation 'org.postgresql:postgresql:42.2.27'
+    testImplementation "junit:junit:4.1"
 }
