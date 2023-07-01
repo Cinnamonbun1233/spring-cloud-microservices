@@ -15,15 +15,15 @@ public class AccountController {
         this.accountService = accountService;
     }
 
-    @GetMapping("/{accountId}")
-    public AccountResponseDto getAccount(@PathVariable Long accountId) {
-        return new AccountResponseDto(accountService.getAccount(accountId));
-    }
-
     @PostMapping("/")
     public Long createAccount(@RequestBody AccountRequestDto accountRequestDto) {
         return accountService.createAccount(accountRequestDto.getName(), accountRequestDto.getEmail(),
                 accountRequestDto.getPhone(), accountRequestDto.getBills());
+    }
+
+    @GetMapping("/{accountId}")
+    public AccountResponseDto getAccount(@PathVariable Long accountId) {
+        return new AccountResponseDto(accountService.getAccount(accountId));
     }
 
     @PutMapping("/{accountId}")
