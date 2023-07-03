@@ -6,6 +6,9 @@ import com.javastart.bill.service.BillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RestController
 public class BillController {
     private final BillService billService;
@@ -19,6 +22,13 @@ public class BillController {
     public Long createBill(@RequestBody BillRequestDto billRequestDto) {
         return billService.createBill(billRequestDto.getAccountId(), billRequestDto.getAmount(),
                 billRequestDto.getIsDefault(), billRequestDto.getIsOverdraftEnabled());
+    }
+
+    @GetMapping("/account/{accountId}")
+    public List<BillResponseDto> getBills(@PathVariable Long accountId) {
+        return billService.getBills(accountId).stream()
+                .map(BillResponseDto::new)
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/{billId}")
