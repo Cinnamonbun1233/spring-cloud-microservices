@@ -27,7 +27,7 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public Binding depositBinding(){
+    public Binding depositBinding() {
         return BindingBuilder
                 .bind(queueDeposit())
                 .to(depositExchange())

@@ -36,6 +36,16 @@ public class DepositService {
         this.rabbitTemplate = rabbitTemplate;
     }
 
+    private static BillRequestDto createBillRequest(BigDecimal amount, BillResponseDto billResponseDto) {
+        BillRequestDto billRequestDto = new BillRequestDto();
+        billRequestDto.setAccountId(billResponseDto.getAccountId());
+        billRequestDto.setCreationDate(billResponseDto.getCreationDate());
+        billRequestDto.setIsDefault(billResponseDto.getIsDefault());
+        billRequestDto.setIsOverdraftEnabled(billResponseDto.getIsOverdraftEnabled());
+        billRequestDto.setAmount(billResponseDto.getAmount().add(amount));
+        return billRequestDto;
+    }
+
     public DepositResponseDto deposit(Long accountId, Long billId, BigDecimal amount) {
         if (accountId == null && billId == null) {
             throw new DepositServiceException("Акканут отсутствует и счёт отсутствует");
@@ -69,16 +79,6 @@ public class DepositService {
             throw new DepositServiceException("Невозможно отправить сообщение в RabbitMQ");
         }
         return depositResponseDto;
-    }
-
-    private static BillRequestDto createBillRequest(BigDecimal amount, BillResponseDto billResponseDto) {
-        BillRequestDto billRequestDto = new BillRequestDto();
-        billRequestDto.setAccountId(billResponseDto.getAccountId());
-        billRequestDto.setCreationDate(billResponseDto.getCreationDate());
-        billRequestDto.setIsDefault(billResponseDto.getIsDefault());
-        billRequestDto.setIsOverdraftEnabled(billResponseDto.getIsOverdraftEnabled());
-        billRequestDto.setAmount(billResponseDto.getAmount().add(amount));
-        return billRequestDto;
     }
 
     private BillResponseDto getDefaultBill(Long accountId) {

@@ -42,7 +42,7 @@ public class BillService {
         return bill;
     }
 
-    public List<Bill> getBills(Long accountId){
+    public List<Bill> getBills(Long accountId) {
         return billRepository.getBillsByAccountId(accountId);
     }
 }

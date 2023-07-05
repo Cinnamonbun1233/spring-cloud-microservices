@@ -33,5 +33,5 @@ dependencies {
     implementation "org.springframework.cloud:spring-cloud-config-server"
     implementation "org.springframework.boot:spring-boot-starter-security:2.3.2.RELEASE"
 
-    testImplementation'junit:junit:4.13.2'
+    testImplementation 'junit:junit:4.13.2'
 }
